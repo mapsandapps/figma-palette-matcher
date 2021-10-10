@@ -4,6 +4,14 @@ figma.showUI(__html__)
 
 figma.ui.onmessage = (msg) => {
   if (msg.type === "match-color") {
+    console.log('figma.getLocalPaintStyles')
+    const colorStyles = figma.getLocalPaintStyles()
+    console.log(colorStyles)
+
+    console.log('first selection: first fill')
+    const rgbArray = figma.currentPage.selection[0].fills[0]
+    console.log(rgbArray)
+
     let color = chroma.hex('#000000').css()
     try {
       color = chroma.hex(msg.color).css()
@@ -12,19 +20,6 @@ figma.ui.onmessage = (msg) => {
       // TODO: send warning to user
       console.warn('Could not parse color', msg.color)
     }
-
-    // const nodes = [];
-
-    // for (let i = 0; i < msg.count; i++) {
-    //   const rect = figma.createRectangle();
-    //   rect.x = i * 150;
-    //   rect.fills = [{ type: "SOLID", color: { r: 1, g: 0.5, b: 0 } }];
-    //   figma.currentPage.appendChild(rect);
-    //   nodes.push(rect);
-    // }
-
-    // figma.currentPage.selection = nodes;
-    // figma.viewport.scrollAndZoomIntoView(nodes);
   }
 
   figma.closePlugin()

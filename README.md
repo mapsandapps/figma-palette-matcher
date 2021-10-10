@@ -2,7 +2,7 @@
 
 <img src="../_screenshots/webpack.png" width="400" />
 
-Creates rectangles. Demonstrates bundling plugin code using Webpack.
+Figma plugin to convert a color to the nearest color in your color styles
 
 The main plugin code is in `src/code.ts`. The HTML for the UI is in
 `src/ui.html`, while the embedded JavaScript is in `src/ui.ts`.

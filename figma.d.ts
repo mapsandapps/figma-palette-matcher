@@ -3,6 +3,7 @@ declare const figma: PluginAPI
 declare const __html__: string
 
 interface PluginAPI {
+  getLocalPaintStyles(): any
   readonly apiVersion: "1.0.0"
   readonly command: string
   readonly root: DocumentNode
