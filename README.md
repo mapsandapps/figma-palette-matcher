@@ -1,6 +1,4 @@
-# Webpack
-
-<img src="../_screenshots/webpack.png" width="400" />
+# Palette Matcher
 
 Figma plugin to convert a color to the nearest color in your color styles
 
