@@ -1,23 +1,7 @@
 import chroma from 'chroma-js'
-import { minBy } from 'lodash'
+import { figmaToChroma, getClosestColor } from './utils'
 
 const DISTANCE_CAP = 25
-
-const getClosestColor = (color: chroma.Color, palette) => {
-  let closest = minBy(palette, 'distance');
-
-  // closest color might not be that close; don't match if it's far
-  if (closest.distance > DISTANCE_CAP) {
-    closest = null
-    throw('No colors in palette are close to this color')
-  }
-
-  return closest
-}
-
-const figmaToChroma = (color: {r: number, g: number, b: number}): chroma.Color => {
-  return chroma(color.r * 255, color.g * 255, color.b * 255)
-}
 
 figma.showUI(__html__)
 
@@ -49,20 +33,16 @@ figma.ui.onmessage = (msg) => {
           hex: figmaToChroma(styleColor).hex(),
           chroma: figmaToChroma(styleColor),
           figma: styleColor,
-          distance: chroma.distance(selectionChromaColor, figmaToChroma(styleColor), 'rgb')
+          distance: chroma.distance(selectionChromaColor, figmaToChroma(styleColor))
         }
       })
     } catch(e) {
       throw('4e7564c6')
     }
 
-    try {
-      const closestColor = getClosestColor(selectionChromaColor, palette)
-      console.log('closestColor')
-      console.log(closestColor)
-    } catch(e) {
-      throw('862099a4')
-    }
+    const closestColor = getClosestColor(palette, DISTANCE_CAP)
+    console.log('closestColor')
+    console.log(closestColor)
   }
 
   figma.closePlugin()
