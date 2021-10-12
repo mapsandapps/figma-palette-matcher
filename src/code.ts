@@ -4,12 +4,12 @@ import { minBy } from 'lodash'
 const DISTANCE_CAP = 25
 
 const getClosestColor = (color: chroma.Color, palette) => {
-  console.log('getClosestColor')
   let closest = minBy(palette, 'distance');
 
   // closest color might not be that close; don't match if it's far
   if (closest.distance > DISTANCE_CAP) {
     closest = null
+    throw('No colors in palette are close to this color')
   }
 
   return closest
@@ -25,29 +25,44 @@ figma.ui.onmessage = (msg) => {
   if (msg.type === "match-color") {
     const colorStyles = figma.getLocalPaintStyles()
 
-    const selectionColor = figma.currentPage.selection[0].fills[0].color
+    let selectionChromaColor: chroma.Color = chroma('#000000')
+    let palette
+    let selectionFigmaColor
 
-    let color: chroma.Color = chroma('#000000')
     try {
-      color = figmaToChroma(selectionColor)
-    } catch (e) {
-      console.warn('Could not parse color', msg.color)
+      selectionFigmaColor = figma.currentPage.selection[0].fills[0].color
+    } catch(e) {
+      throw('Selection does not exist or has no fill')
     }
 
-    const palette = colorStyles.map(style => {
-      const styleColor = style.paints[0].color
-      return {
-        name: style.name,
-        hex: figmaToChroma(styleColor).hex(),
-        chroma: figmaToChroma(styleColor),
-        figma: styleColor,
-        distance: chroma.distance(color, figmaToChroma(styleColor), 'rgb')
-      }
-    })
+    try {
+      selectionChromaColor = figmaToChroma(selectionFigmaColor)
+    } catch (e) {
+      throw('Could not parse color')
+    }
 
-    const closestColor = getClosestColor(color, palette)
-    console.log('closestColor')
-    console.log(closestColor)
+    try {
+      palette = colorStyles.map(style => {
+        const styleColor = style.paints[0].color
+        return {
+          name: style.name,
+          hex: figmaToChroma(styleColor).hex(),
+          chroma: figmaToChroma(styleColor),
+          figma: styleColor,
+          distance: chroma.distance(selectionChromaColor, figmaToChroma(styleColor), 'rgb')
+        }
+      })
+    } catch(e) {
+      throw('4e7564c6')
+    }
+
+    try {
+      const closestColor = getClosestColor(selectionChromaColor, palette)
+      console.log('closestColor')
+      console.log(closestColor)
+    } catch(e) {
+      throw('862099a4')
+    }
   }
 
   figma.closePlugin()
