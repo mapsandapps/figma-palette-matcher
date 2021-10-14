@@ -14,7 +14,6 @@ type PaletteItem = {
 }
 
 export const getClosestColor = (palette: PaletteItem[], distanceCap: number) : PaletteItem => {
-  console.log(palette)
   let closest = minBy(palette, 'distance');
 
   // closest color might not be that close; don't match if it's far
