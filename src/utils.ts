@@ -30,3 +30,10 @@ export const getClosestColor = (palette: PaletteItem[], distanceCap: number) : P
 export const figmaToChroma = (color: {r: number, g: number, b: number}): chroma.Color => {
   return chroma(color.r * 255, color.g * 255, color.b * 255)
 }
+
+export const replaceColor = (palette: PaletteItem[], selection: SceneNode, distanceCap: number) => {
+  const closestColor = getClosestColor(palette, distanceCap)
+  selection.fillStyleId = closestColor.id
+
+  return closestColor.name
+}

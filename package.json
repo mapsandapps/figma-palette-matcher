@@ -22,6 +22,7 @@
     "webpack-cli": "^3.3.6"
   },
   "devDependencies": {
+    "@figma/plugin-typings": "1.37.0",
     "@types/chroma-js": "2.1.3"
   }
 }

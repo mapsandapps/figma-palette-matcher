@@ -1,6 +1,5 @@
 import chroma from 'chroma-js'
-import { cloneDeep } from 'lodash'
-import { figmaToChroma, getClosestColor } from './utils'
+import { figmaToChroma, replaceColor } from './utils'
 
 const DISTANCE_CAP = 25
 
@@ -45,10 +44,9 @@ figma.ui.onmessage = (msg) => {
       throw('4e7564c6')
     }
 
-    const closestColor = getClosestColor(palette, DISTANCE_CAP)
-    firstSelection.fillStyleId = closestColor.id
+    const replacedColorName = replaceColor(palette, firstSelection, DISTANCE_CAP)
 
-    figma.closePlugin('Success! ' + closestColor.name)
+    figma.closePlugin('Success! ' + replacedColorName)
   }
 
   figma.closePlugin()
