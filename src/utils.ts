@@ -2,6 +2,7 @@ import chroma from 'chroma-js'
 import { minBy } from 'lodash'
 
 type PaletteItem = {
+  id: string,
   name: string,
   hex: string,
   chroma: chroma.Color,

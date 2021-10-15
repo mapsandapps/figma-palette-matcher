@@ -30,8 +30,10 @@ figma.ui.onmessage = (msg) => {
 
     try {
       palette = colorStyles.map(style => {
+        // @ts-ignore
         const styleColor = style.paints[0].color
         return {
+          id: style.id,
           name: style.name,
           hex: figmaToChroma(styleColor).hex(),
           chroma: figmaToChroma(styleColor),
@@ -44,10 +46,7 @@ figma.ui.onmessage = (msg) => {
     }
 
     const closestColor = getClosestColor(palette, DISTANCE_CAP)
-    console.log(closestColor)
-    const newFills = cloneDeep(firstSelection.fills)
-    newFills[0].color = closestColor.figma
-    firstSelection.fills = newFills
+    firstSelection.fillStyleId = closestColor.id
 
     figma.closePlugin('Success! ' + closestColor.name)
   }
