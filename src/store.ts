@@ -1,4 +1,5 @@
 import Vuex from 'vuex'
+import { getClosestColor } from './utils'
 
 const createStore = () => {
   return new Vuex.Store({
@@ -9,8 +10,9 @@ const createStore = () => {
     },
     getters: {
       colors(state) {
-        // TODO: based on selectedColors()
-        return state.selectedColors
+        return state.selectedColors.map(color => {
+          return getClosestColor(color, state.colorStyles, state.threshhold)
+        })
       }
     },
     mutations: {

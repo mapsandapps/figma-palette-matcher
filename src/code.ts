@@ -1,7 +1,7 @@
 import chroma from 'chroma-js'
 import { filter } from 'lodash'
 import { ColorStyle, RGB, SelectedColor } from './types'
-import { figmaToChroma, figmaToHex, replaceColor } from './utils'
+import { figmaToChroma, figmaToHex } from './utils'
 
 const DISTANCE_CAP = 25
 
@@ -39,9 +39,9 @@ figma.ui.onmessage = (message) => {
     let firstSelection
 
     const threshholdBox = document.getElementById("threshhold") as HTMLInputElement
-    const replacedColorName = replaceColor(palette, firstSelection, parseInt(threshholdBox.value) || DISTANCE_CAP)
+    // const replacedColorName = replaceColor(palette, firstSelection, parseInt(threshholdBox.value) || DISTANCE_CAP)
 
-    figma.closePlugin('Success! ' + replacedColorName)
+    // figma.closePlugin('Success! ' + replacedColorName)
   }
 
   figma.closePlugin()
@@ -68,6 +68,8 @@ const getColorStyles = (): ColorStyle[] => {
 
 const getSelections = (): SelectedColor[] => {
   const selectionsWithFill = filter(figma.currentPage.selection, (selection, i) => {
+    // TODO: this possibly should use more than just the first fill
+    // @ts-ignore
     const color = selection.fills[0].color
     return Boolean(color)
   })

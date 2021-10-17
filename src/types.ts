@@ -1,5 +1,11 @@
 import chroma from "chroma-js"
 
+export type ColorListItem = {
+  originalColor: SelectedColor
+  closestColorStyle?: ColorStyle
+  distance: number
+}
+
 export type ColorStyle = {
   id: string,
   name: string,

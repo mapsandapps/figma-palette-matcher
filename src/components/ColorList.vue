@@ -1,24 +1,17 @@
 <template>
 <div>
-  Color styles: <br />
+  Selected fills: <br />
   <div
-      v-for="(color, index) of colorStyles"
-      :key="index"
-      class="color-swatch"
-      :style="'background:' + color.hex"
-  /><br />
-  Color styles: <br />
-  <div
-      v-for="(selection, index) of selectedColors"
+      v-for="(color, index) of colors"
       :key="'color-swatch' + index"
       class="color-swatch"
-      :style="'background:' + selection.hex"
+      :style="'background:' + color.originalColor.hex"
   />
 </div>
 </template>
 
 <script lang="ts">
-import { mapMutations, mapState } from 'vuex'
+import { mapGetters, mapMutations, mapState } from 'vuex'
 export default {
   name: 'ColorList',
   components: {
@@ -28,7 +21,8 @@ export default {
   // data() {
   // },
   computed: {
-    ...mapState(['colorStyles', 'selectedColors'])
+    ...mapGetters(['colors']),
+    ...mapState(['colorStyles'])
   },
   methods: {
     handleMessage() {
