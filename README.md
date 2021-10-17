@@ -11,9 +11,9 @@ your plugin.
 To build:
 
     $ npm install
-    $ npx webpack
+    $ npm run build
 
 For dev:
 
     $ npm install
-    $ npx webpack --mode=development --watch
+    $ npm run dev

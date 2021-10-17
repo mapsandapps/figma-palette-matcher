@@ -1,5 +1,6 @@
-const HtmlWebpackInlineSourcePlugin = require('html-webpack-inline-source-plugin')
+const HtmlInlineScriptPlugin = require('html-inline-script-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const { VueLoaderPlugin } = require('vue-loader')
 const path = require('path')
 const webpack = require('webpack')
 
@@ -17,13 +18,36 @@ module.exports = (env, argv) => ({
   module: {
     rules: [
       // Converts TypeScript code to JavaScript
-      { test: /\.tsx?$/, use: 'ts-loader', exclude: /node_modules/ },
+      {
+        test: /\.tsx?$/,
+        loader: 'ts-loader',
+        exclude: /node_modules/,
+        options: {
+          appendTsSuffixTo: [/\.vue$/]
+        }
+      },
 
       // Enables including CSS by doing "import './file.css'" in your TypeScript code
-      { test: /\.css$/, loader: [{ loader: 'style-loader' }, { loader: 'css-loader' }] },
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader']
+      },
 
-      // Allows you to use "<%= require('./file.svg') %>" in your HTML code to get a data URI
-      { test: /\.(png|jpg|gif|webp|svg|zip)$/, loader: [{ loader: 'url-loader' }] },
+      // // Allows you to use "<%= require('./file.svg') %>" in your HTML code to get a data URI
+      // {
+      //   test: /\.(png|jpg|gif|webp|svg|zip)$/,
+      //   loader: 'url-loader'
+      // },
+
+      {
+          test: /\.scss$/,
+          use: ['style-loader', 'css-loader', 'sass-loader']
+      },
+
+      {
+        test: /\.vue$/,
+        loader: "vue-loader",
+      },
     ],
   },
 
@@ -31,8 +55,10 @@ module.exports = (env, argv) => ({
   resolve: { extensions: ['.tsx', '.ts', '.jsx', '.js'] },
 
   output: {
+    clean: true,
     filename: '[name].js',
     path: path.resolve(__dirname, 'dist'), // Compile into a folder called "dist"
+    publicPath: 'dist',
   },
 
   // Tells Webpack to generate "ui.html" and to inline "ui.ts" into it
@@ -41,11 +67,16 @@ module.exports = (env, argv) => ({
       'global': {} // Fix missing symbol error when running in developer VM
     }),
     new HtmlWebpackPlugin({
-      template: './src/ui.html',
-      filename: 'ui.html',
-      inlineSource: '.(js)$',
+      cache: false,
       chunks: ['ui'],
+      filename: 'ui.html',
+      inject: 'body',
+      inlineSource: '.(js)$',
+      template: './src/ui.html'
     }),
-    new HtmlWebpackInlineSourcePlugin(),
+    new HtmlInlineScriptPlugin([
+        /ui.js$/
+    ]),
+    new VueLoaderPlugin(),
   ],
 })

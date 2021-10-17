@@ -1,20 +1,14 @@
-import "./ui.css"
-import { onLaunch } from './utils'
-
-const getGrid = () => {
-  const gridEl = document.getElementById("grid")
-  console.log('getGrid')
-  console.log(gridEl)
-  onLaunch(gridEl)
-}
-
-document.addEventListener("load", () => getGrid())
-
-document.getElementById("match").onclick = () => {
-  const textbox = document.getElementById("color") as HTMLInputElement
-  parent.postMessage({ pluginMessage: { type: "match-color", color: textbox.value } }, "*")
-}
-
-document.getElementById("cancel").onclick = () => {
-  parent.postMessage({ pluginMessage: { type: "cancel" } }, "*")
-}
+import Vue from 'vue'
+import Vuex from 'vuex'
+import App from './App.vue'
+import store from './store'
+import './ui.scss'
+Vue.use(Vuex)
+new Vue({
+    el: '#app',
+    components: { App },
+    store: store(),
+    render(h) {
+        return h(App)
+    }
+})

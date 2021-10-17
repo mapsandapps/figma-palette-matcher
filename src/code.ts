@@ -8,10 +8,9 @@ figma.showUI(__html__, {
   height: Math.round(figma.viewport.bounds.height * 0.8)
 })
 
-// figma.on('run', () => {
-//   console.log('run')
-//   onLaunch()
-// })
+figma.on('run', () => {
+  console.log('run')
+})
 
 figma.on('selectionchange', () => {
   console.log('selection changed')
@@ -31,7 +30,9 @@ figma.ui.onmessage = (message) => {
 
     try {
       firstSelection = figma.currentPage.selection[0]
+      // @ts-ignore // TODO:
       console.log(firstSelection.fillStyleId)
+      // @ts-ignore // TODO:
       selectionFigmaColor = firstSelection.fills[0].color
     } catch(e) {
       throw('Selection does not exist or has no fill')

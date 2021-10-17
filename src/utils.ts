@@ -40,23 +40,24 @@ export const figmaToChroma = (color: {r: number, g: number, b: number}): chroma.
   return chroma(color.r * 255, color.g * 255, color.b * 255)
 }
 
-export const onLaunch = (gridEl) => {
+export const onLaunch = () => {
   console.log('onLaunch')
   // TODO: ignore selections with no fill?
   let colors = []
   console.log(figma.currentPage.selection)
   figma.currentPage.selection.map(selection => {
     colors.push({
+      // @ts-ignore // TODO:
       originalColor: figmaToChroma(selection.fills[0].color)
     })
   })
   console.log('onLaunch')
-  console.log(gridEl)
-  drawGrid(gridEl, colors)
+  return colors
 }
 
 export const replaceColor = (palette: PaletteItem[], selection: SceneNode, distanceCap: number) => {
   const closestColor = getClosestColor(palette, distanceCap)
+  // @ts-ignore // TODO:
   selection.fillStyleId = closestColor.id
 
   return closestColor.name

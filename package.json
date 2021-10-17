@@ -1,28 +1,40 @@
 {
-  "name": "sandbox",
+  "name": "figma-palette-matcher-plugin",
   "version": "1.0.0",
   "description": "",
   "main": "code.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mapsandapps/figma-palette-matcher"
+  },
   "scripts": {
+    "build": "webpack --config webpack.config.js --mode production",
+    "dev": "webpack --config webpack.config.js --mode development --watch",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Shawn Taylor",
   "license": "MIT",
   "dependencies": {
     "chroma-js": "2.1.2",
-    "css-loader": "^3.1.0",
-    "html-webpack-inline-source-plugin": "0.0.10",
-    "html-webpack-plugin": "^3.2.0",
+    "html-webpack-plugin": "^5.3.1",
     "lodash": "4.17.21",
-    "style-loader": "^0.23.1",
-    "ts-loader": "^6.0.4",
-    "typescript": "^3.5.3",
-    "url-loader": "^2.1.0",
-    "webpack": "^4.38.0",
-    "webpack-cli": "^3.3.6"
+    "typescript": "3.9.10",
+    "vue": "2.6.14",
+    "vuex": "3.6.2"
   },
   "devDependencies": {
     "@figma/plugin-typings": "1.37.0",
-    "@types/chroma-js": "2.1.3"
+    "@types/chroma-js": "2.1.3",
+    "css-loader": "3.6.0",
+    "html-inline-script-webpack-plugin": "^2.0.1",
+    "node-sass": "6.0.1",
+    "sass-loader": "11.1.1",
+    "style-loader": "0.23.1",
+    "ts-loader": "6.2.2",
+    "vue-loader": "15.9.8",
+    "vue-template-compiler": "2.6.14",
+    "webpack": "^5.37.1",
+    "webpack-cli": "^4.7.0",
+    "webpack-dev-server": "^3.11.2"
   }
 }
