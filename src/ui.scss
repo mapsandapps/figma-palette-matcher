@@ -1,3 +1,6 @@
+@import "~normalize.css/normalize.css";
+
+// TODO: delete much of this
 body {
   font: 12px sans-serif;
   text-align: center;
@@ -19,7 +22,7 @@ button {
   color: white;
 }
 input {
-  border: none;
+  border: 1px solid black;
   outline: none;
   padding: 8px;
 }

@@ -23,7 +23,6 @@ const createStore = () => {
         state.selectedColors = colors
       },
       setThreshhold(state, threshhold) {
-        // TODO: if this changes, colors should get recalculated, e.g. by sending the message 'colorsFromSelections'
         state.threshhold = threshhold
       }
     }

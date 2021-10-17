@@ -14,6 +14,11 @@ export type ColorStyle = {
   figma: RGB
 }
 
+export enum LightDarkEnum {
+  Light,
+  Dark
+}
+
 export type SelectedColor = {
   id: string,
   hex: string,
