@@ -9,7 +9,7 @@ figma.showUI(__html__, {
 })
 
 figma.on('run', () => {
-  console.log('run')
+  // console.log('run')
 })
 
 figma.on('selectionchange', () => {

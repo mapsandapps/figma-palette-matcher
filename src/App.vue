@@ -24,14 +24,12 @@ export default {
   computed: {},
   methods: {
     start() {
-      this.colors = onLaunch()
+      this.colors = []
     },
     ...mapMutations(['setColors']),
   },
   mounted() {
     this.start()
-    this.generateShades()
-    this.generateColorHarmonies()
   },
   watch: {},
   mixins: [],

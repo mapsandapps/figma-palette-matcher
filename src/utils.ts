@@ -44,8 +44,8 @@ export const onLaunch = () => {
   console.log('onLaunch')
   // TODO: ignore selections with no fill?
   let colors = []
-  console.log(figma.currentPage.selection)
-  figma.currentPage.selection.map(selection => {
+  console.log(figma!.currentPage.selection)
+  figma!.currentPage.selection.map(selection => {
     colors.push({
       // @ts-ignore // TODO:
       originalColor: figmaToChroma(selection.fills[0].color)
