@@ -1,5 +1,6 @@
 import chroma from 'chroma-js'
 import { filter } from 'lodash'
+import { ColorStyle, RGB } from './types'
 import { figmaToChroma, replaceColor } from './utils'
 
 const DISTANCE_CAP = 25
@@ -55,21 +56,22 @@ figma.ui.onmessage = (message) => {
   figma.closePlugin()
 }
 
-const getColorStyles = () => {
+const getColorStyles = (): Array<ColorStyle> => {
   const colorStyles = filter(figma.getLocalPaintStyles(), (style) => {
-    // TODO: possibly should also check that opacity is 100%?
-    return style.paints[0].type === 'SOLID'
+    return style.paints[0].type === 'SOLID' && style.paints[0].opacity === 1
   })
 
   return colorStyles.map(style => {
-    const styleColor = style.paints[0].color
-    return {
+    // @ts-ignore
+    const styleColor: RGB = style.paints[0].color
+    const colorStyle: ColorStyle = {
       id: style.id,
       name: style.name,
       hex: figmaToChroma(styleColor).hex(),
       chroma: figmaToChroma(styleColor),
       figma: styleColor
     }
+    return colorStyle
   })
 }
 

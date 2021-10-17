@@ -10,7 +10,6 @@
 import { mapMutations } from 'vuex'
 
 import ColorList from './components/ColorList.vue'
-import { onLaunch } from './utils'
 
 export default {
   components: {
@@ -18,13 +17,17 @@ export default {
   },
   data() {
     return {
-      colors: []
+      selections: []
     }
   },
-  computed: {},
+  computed: {
+    colors() {
+      return []
+    }
+  },
   methods: {
     start() {
-      this.colors = []
+      // this.colors = []
     },
     ...mapMutations(['setColors']),
   },
