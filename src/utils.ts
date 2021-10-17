@@ -27,28 +27,17 @@ export const getClosestColor = (palette: PaletteItem[], distanceCap: number) : P
   return closest
 }
 
-export const figmaToChroma = (color: {r: number, g: number, b: number}): chroma.Color => {
+export const figmaToChroma = (color: RGB): chroma.Color => {
   return chroma(color.r * 255, color.g * 255, color.b * 255)
+}
+
+export const figmaToHex = (color: RGB): string => {
+  return figmaToChroma(color).hex()
 }
 
 // TODO: might be unnecessary
 export const getDistance = (firstColor: chroma.Color, secondColor: chroma.Color): number => {
   return chroma.distance(firstColor, secondColor)
-}
-
-export const onLaunch = () => {
-  console.log('onLaunch')
-  // TODO: ignore selections with no fill?
-  let colors = []
-  console.log(figma!.currentPage.selection)
-  figma!.currentPage.selection.map(selection => {
-    colors.push({
-      // @ts-ignore // TODO:
-      originalColor: figmaToChroma(selection.fills[0].color)
-    })
-  })
-  console.log('onLaunch')
-  return colors
 }
 
 export const replaceColor = (palette: PaletteItem[], selection: SceneNode, distanceCap: number) => {

@@ -4,23 +4,24 @@ const createStore = () => {
   return new Vuex.Store({
     state: {
       colorStyles: [],
-      colors: [
-        {
-          hex: '#000000'
-        }
-      ],
+      selectedColors: [],
       threshhold: 25
     },
-    getters: {},
+    getters: {
+      colors(state) {
+        // TODO: based on selectedColors()
+        return state.selectedColors
+      }
+    },
     mutations: {
       setColorStyles(state, colors) {
-          state.colorStyles = colors
+        state.colorStyles = colors
       },
-      setColors(state, colors) {
-        state.colors = colors
+      setSelectedColors(state, colors) {
+        state.selectedColors = colors
       },
       setThreshhold(state, threshhold) {
-        // TODO: if this changes, colors should get recalculated
+        // TODO: if this changes, colors should get recalculated, e.g. by sending the message 'colorsFromSelections'
         state.threshhold = threshhold
       }
     }

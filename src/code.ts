@@ -1,7 +1,7 @@
 import chroma from 'chroma-js'
 import { filter } from 'lodash'
-import { ColorStyle, RGB } from './types'
-import { figmaToChroma, replaceColor } from './utils'
+import { ColorStyle, RGB, SelectedColor } from './types'
+import { figmaToChroma, figmaToHex, replaceColor } from './utils'
 
 const DISTANCE_CAP = 25
 
@@ -14,12 +14,20 @@ figma.on('run', () => {
   figma.ui.postMessage({
     name: 'colorsFromLocalStyles',
     data: getColorStyles()
-})
-
+  })
+  figma.ui.postMessage({
+    name: 'colorsFromSelections',
+    data: getSelections()
+  })
 })
 
 figma.on('selectionchange', () => {
   console.log('selection changed')
+
+  figma.ui.postMessage({
+    name: 'colorsFromSelections',
+    data: getSelections()
+  })
 })
 
 figma.ui.onmessage = (message) => {
@@ -29,23 +37,6 @@ figma.ui.onmessage = (message) => {
     let selectionChromaColor: chroma.Color = chroma('#000000')
     let palette
     let firstSelection
-    let selectionFigmaColor
-
-    try {
-      firstSelection = figma.currentPage.selection[0]
-      // @ts-ignore // TODO:
-      console.log(firstSelection.fillStyleId)
-      // @ts-ignore // TODO:
-      selectionFigmaColor = firstSelection.fills[0].color
-    } catch(e) {
-      throw('Selection does not exist or has no fill')
-    }
-
-    try {
-      selectionChromaColor = figmaToChroma(selectionFigmaColor)
-    } catch (e) {
-      throw('Could not parse color')
-    }
 
     const threshholdBox = document.getElementById("threshhold") as HTMLInputElement
     const replacedColorName = replaceColor(palette, firstSelection, parseInt(threshholdBox.value) || DISTANCE_CAP)
@@ -56,7 +47,7 @@ figma.ui.onmessage = (message) => {
   figma.closePlugin()
 }
 
-const getColorStyles = (): Array<ColorStyle> => {
+const getColorStyles = (): ColorStyle[] => {
   const colorStyles = filter(figma.getLocalPaintStyles(), (style) => {
     return style.paints[0].type === 'SOLID' && style.paints[0].opacity === 1
   })
@@ -72,6 +63,24 @@ const getColorStyles = (): Array<ColorStyle> => {
       figma: styleColor
     }
     return colorStyle
+  })
+}
+
+const getSelections = (): SelectedColor[] => {
+  const selectionsWithFill = filter(figma.currentPage.selection, (selection, i) => {
+    const color = selection.fills[0].color
+    return Boolean(color)
+  })
+
+  return selectionsWithFill.map((selection) => {
+    // @ts-ignore
+    const color = selection.fills[0].color
+    return {
+      id: selection.id,
+      figma: color,
+      hex: figmaToHex(color),
+      chroma: figmaToChroma(color)
+    }
   })
 }
 

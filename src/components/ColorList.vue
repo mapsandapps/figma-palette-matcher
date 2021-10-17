@@ -1,12 +1,18 @@
 <template>
 <div>
-  Color styles: <br>
+  Color styles: <br />
   <div
       v-for="(color, index) of colorStyles"
       :key="index"
       class="color-swatch"
       :style="'background:' + color.hex"
-      :title="color.name"
+  /><br />
+  Color styles: <br />
+  <div
+      v-for="(selection, index) of selectedColors"
+      :key="'color-swatch' + index"
+      class="color-swatch"
+      :style="'background:' + selection.hex"
   />
 </div>
 </template>
@@ -22,17 +28,21 @@ export default {
   // data() {
   // },
   computed: {
-    ...mapState(['colorStyles'])
+    ...mapState(['colorStyles', 'selectedColors'])
   },
   methods: {
     handleMessage() {
+      // TODO: should this be in the store? or in App.vue?
       onmessage = (event: any) => {
         if (event.data.pluginMessage.name === 'colorsFromLocalStyles') {
           this.setColorStyles(event.data.pluginMessage.data)
         }
+        if (event.data.pluginMessage.name === 'colorsFromSelections') {
+          this.setSelectedColors(event.data.pluginMessage.data)
+        }
       }
     },
-    ...mapMutations(['setColorStyles'])
+    ...mapMutations(['setColorStyles', 'setSelectedColors'])
   },
   mounted() {
     this.handleMessage()
