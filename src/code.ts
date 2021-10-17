@@ -1,5 +1,6 @@
 import chroma from 'chroma-js'
-import { figmaToChroma, onLaunch, replaceColor } from './utils'
+import { filter } from 'lodash'
+import { figmaToChroma, replaceColor } from './utils'
 
 const DISTANCE_CAP = 25
 
@@ -9,7 +10,11 @@ figma.showUI(__html__, {
 })
 
 figma.on('run', () => {
-  // console.log('run')
+  figma.ui.postMessage({
+    name: 'colorsFromLocalStyles',
+    data: getColorStyles()
+})
+
 })
 
 figma.on('selectionchange', () => {
@@ -20,9 +25,6 @@ figma.ui.onmessage = (message) => {
   console.log('message:')
   console.log(message)
   if (message.type === "match-color") {
-    const colorStyles = figma.getLocalPaintStyles()
-    console.log(colorStyles)
-
     let selectionChromaColor: chroma.Color = chroma('#000000')
     let palette
     let firstSelection
@@ -44,23 +46,6 @@ figma.ui.onmessage = (message) => {
       throw('Could not parse color')
     }
 
-    try {
-      palette = colorStyles.map(style => {
-        // @ts-ignore
-        const styleColor = style.paints[0].color
-        return {
-          id: style.id,
-          name: style.name,
-          hex: figmaToChroma(styleColor).hex(),
-          chroma: figmaToChroma(styleColor),
-          figma: styleColor,
-          distance: chroma.distance(selectionChromaColor, figmaToChroma(styleColor))
-        }
-      })
-    } catch(e) {
-      throw('4e7564c6')
-    }
-
     const threshholdBox = document.getElementById("threshhold") as HTMLInputElement
     const replacedColorName = replaceColor(palette, firstSelection, parseInt(threshholdBox.value) || DISTANCE_CAP)
 
@@ -68,4 +53,23 @@ figma.ui.onmessage = (message) => {
   }
 
   figma.closePlugin()
-};
+}
+
+const getColorStyles = () => {
+  const colorStyles = filter(figma.getLocalPaintStyles(), (style) => {
+    // TODO: possibly should also check that opacity is 100%?
+    return style.paints[0].type === 'SOLID'
+  })
+
+  return colorStyles.map(style => {
+    const styleColor = style.paints[0].color
+    return {
+      id: style.id,
+      name: style.name,
+      hex: figmaToChroma(styleColor).hex(),
+      chroma: figmaToChroma(styleColor),
+      figma: styleColor
+    }
+  })
+}
+

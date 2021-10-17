@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 const createStore = () => {
   return new Vuex.Store({
     state: {
+      colorStyles: [],
       colors: [
         {
           hex: '#000000'
@@ -11,9 +12,12 @@ const createStore = () => {
     },
     getters: {},
     mutations: {
+      setColorStyles(state, colors) {
+          state.colorStyles = colors
+      },
       setColors(state, colors) {
         state.colors = colors
-      }
+      },
     }
   })
 }
