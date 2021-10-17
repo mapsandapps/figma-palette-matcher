@@ -1,20 +1,21 @@
 <template>
 <div>
   Selected fills: <br />
-  <div
-      v-for="(color, index) of colors"
-      :key="'color-swatch' + index"
-      class="color-swatch"
-      :style="'background:' + color.originalColor.hex"
+  <ColorListItem
+    v-for="(color, index) of colors"
+    :color="color"
+    :key="'color-swatch' + index"
   />
 </div>
 </template>
 
 <script lang="ts">
 import { mapGetters, mapMutations, mapState } from 'vuex'
+import ColorListItem from './ColorListItem.vue';
 export default {
   name: 'ColorList',
   components: {
+    ColorListItem
   },
   props: {
   },
@@ -45,9 +46,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.color-swatch {
-  width: 48px;
-  height: 48px;
-  display: inline-block;
-}
 </style>
