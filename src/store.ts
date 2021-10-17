@@ -8,7 +8,8 @@ const createStore = () => {
         {
           hex: '#000000'
         }
-      ]
+      ],
+      threshhold: 25
     },
     getters: {},
     mutations: {
@@ -18,6 +19,10 @@ const createStore = () => {
       setColors(state, colors) {
         state.colors = colors
       },
+      setThreshhold(state, threshhold) {
+        // TODO: if this changes, colors should get recalculated
+        state.threshhold = threshhold
+      }
     }
   })
 }
