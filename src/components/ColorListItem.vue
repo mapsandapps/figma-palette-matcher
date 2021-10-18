@@ -23,9 +23,7 @@
       :stroke="textColor"
       stroke-width="1"
       :fill="color.closestColorStyle.hex"
-    >
-      <text>{{ color.closestColorStyle.name }}</text>
-    </rect>
+    />
     <g
       v-if="color.closestColorStyle"
       width="29"
@@ -34,11 +32,17 @@
       viewBox="0 0 29 26"
       fill="none"
       xmlns="http://www.w3.org/2000/svg">
-      <path d="M24 25C24 11.7452 13.2548 1 0 1" stroke="black" stroke-width="2"/>
-      <line x1="19.7071" y1="20.2929" x2="24.7071" y2="25.2929" stroke="black" stroke-width="2"/>
-      <line x1="23.2929" y1="25.2929" x2="28.2929" y2="20.2929" stroke="black" stroke-width="2"/>
+      <path d="M24 25C24 11.7452 13.2548 1 0 1" :stroke="textColor" stroke-width="2"/>
+      <line x1="19.7071" y1="20.2929" x2="24.7071" y2="25.2929" :stroke="textColor" stroke-width="2"/>
+      <line x1="23.2929" y1="25.2929" x2="28.2929" y2="20.2929" :stroke="textColor" stroke-width="2"/>
     </g>
   </svg>
+  <div
+    v-if="color.closestColorStyle"
+    class="color-list-item-name"
+    :style="'color: ' + textColor">
+    {{ color.closestColorStyle.name }}
+  </div>
 
   <div v-if="color.distance === 0">
     Exact match!
@@ -75,10 +79,20 @@ export default {
 
 <style lang="scss" scoped>
 .color-list-item {
+  position: relative;
   background-color: #bdc3c7;
   border: 8px solid white;
   display: inline-block;
   padding: 16px;
   vertical-align: top;
+}
+
+.color-list-item-name {
+  position: absolute;
+  width: 48px;
+  height: 48px;
+  top: 52px;
+  left: 40px;
+  text-align: center;
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
 <div>
-  Selected fills: <br />
+  Preview replacements: <br />
   <ColorListItem
     v-for="(color, index) of colors"
     :color="color"
