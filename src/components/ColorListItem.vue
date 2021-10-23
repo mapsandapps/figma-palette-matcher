@@ -2,9 +2,9 @@
 <div class="color-list-item">
   <svg
     class="color-swatches"
-    width="74"
-    height="74"
-    viewBox="0 0 74 74">
+    :width="width"
+    :height="width"
+    :viewBox="'0 0 ' + width + ' ' + width">
     <rect
       :width="swatchWidth"
       :height="swatchWidth"
@@ -71,6 +71,9 @@ export default {
       // if bg is dark, text is white
       // if bg is light, text is black
       return getLightVsDark(this.color.closestColorStyle?.hex || this.color.originalColor.hex) === LightDarkEnum.Light ? 'black' : 'white'
+    },
+    width: function() {
+      return this.swatchWidth * 1.5 + 2
     }
   },
   data() {
