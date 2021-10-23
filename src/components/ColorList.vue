@@ -10,38 +10,23 @@
 </template>
 
 <script lang="ts">
-import { mapGetters, mapMutations, mapState } from 'vuex'
+import { mapGetters, mapState } from 'vuex'
 import ColorListItem from './ColorListItem.vue';
 export default {
   name: 'ColorList',
   components: {
     ColorListItem
   },
-  props: {
+  props: {},
+  data() {
+    return {}
   },
-  // data() {
-  // },
   computed: {
     ...mapGetters(['colors']),
     ...mapState(['colorStyles'])
   },
-  methods: {
-    handleMessage() {
-      // TODO: should this be in the store? or in App.vue?
-      onmessage = (event: any) => {
-        if (event.data.pluginMessage.name === 'colorsFromLocalStyles') {
-          this.setColorStyles(event.data.pluginMessage.data)
-        }
-        if (event.data.pluginMessage.name === 'colorsFromSelections') {
-          this.setSelectedColors(event.data.pluginMessage.data)
-        }
-      }
-    },
-    ...mapMutations(['setColorStyles', 'setSelectedColors'])
-  },
-  mounted() {
-    this.handleMessage()
-  }
+  methods: {},
+  mounted() {}
 };
 </script>
 
