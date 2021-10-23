@@ -6,29 +6,31 @@
     height="74"
     viewBox="0 0 74 74">
     <rect
-      width="48"
-      height="48"
+      :width="swatchWidth"
+      :height="swatchWidth"
+      :x="borderWidth"
+      :y="borderWidth"
       rx="8"
       :stroke="textColor"
-      stroke-width="1"
+      :stroke-width="borderWidth"
       :fill="color.originalColor.hex"
     />
     <rect
-      width="48"
-      height="48"
-      x="24"
-      y="24"
+      :width="swatchWidth"
+      :height="swatchWidth"
+      :x="secondSwatchPosition"
+      :y="secondSwatchPosition"
       rx="8"
       v-if="color.closestColorStyle"
       :stroke="textColor"
-      stroke-width="1"
+      :stroke-width="borderWidth"
       :fill="color.closestColorStyle.hex"
     />
     <g
       v-if="color.closestColorStyle"
       width="29"
       height="26"
-      transform="translate(38, 10)"
+      transform="translate(39, 10)"
       viewBox="0 0 29 26"
       fill="none"
       xmlns="http://www.w3.org/2000/svg">
@@ -62,10 +64,19 @@ export default {
   components: {
   },
   computed: {
+    secondSwatchPosition: function() {
+      return this.swatchWidth / 2 + 1
+    },
     textColor: function() {
       // if bg is dark, text is white
       // if bg is light, text is black
       return getLightVsDark(this.color.closestColorStyle?.hex || this.color.originalColor.hex) === LightDarkEnum.Light ? 'black' : 'white'
+    }
+  },
+  data() {
+    return {
+      borderWidth: 1,
+      swatchWidth: 48
     }
   },
   props: {
