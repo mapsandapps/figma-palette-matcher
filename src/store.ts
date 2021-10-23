@@ -8,6 +8,16 @@ const createStore = () => {
       selectedColors: [],
       threshhold: 25
     },
+    actions: {
+      closePlugin() {
+        parent.postMessage({ pluginMessage: { name: 'closePlugin' }}, '*')
+      },
+      replaceColors() {
+        parent.postMessage({ pluginMessage: { name: 'replaceColor', data: 'foo' }}, '*')
+
+        parent.postMessage({ pluginMessage: { name: 'closePlugin', data: 'Success!' }}, '*')
+      }
+    },
     getters: {
       colors(state) {
         return state.selectedColors.map(color => {

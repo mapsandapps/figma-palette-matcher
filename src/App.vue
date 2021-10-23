@@ -7,12 +7,12 @@
       @input="updateThreshhold"
       placeholder="Default: 25" />
     <ColorList />
-    <button>Replace colors</button>
-    <button>Cancel</button>
+    <button @click="replaceColors">Replace colors</button>
+    <button @click="closePlugin">Cancel</button>
   </div>
 </template>
 <script lang="ts">
-import { mapState } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 
 import ColorList from './components/ColorList.vue'
 
@@ -24,7 +24,8 @@ export default {
     ...mapState(['threshhold'])
   },
   methods: {
-    updateThreshhold (e) {
+    ...mapActions(['closePlugin', 'replaceColors']),
+    updateThreshhold(e) {
       this.$store.commit('setThreshhold', e.target.value)
     }
   },

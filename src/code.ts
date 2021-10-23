@@ -1,9 +1,6 @@
-import chroma from 'chroma-js'
 import { filter } from 'lodash'
 import { ColorStyle, RGB, SelectedColor } from './types'
 import { figmaToChroma, figmaToHex } from './utils'
-
-const DISTANCE_CAP = 25
 
 figma.showUI(__html__, {
   width: 450,
@@ -33,18 +30,12 @@ figma.on('selectionchange', () => {
 figma.ui.onmessage = (message) => {
   console.log('message:')
   console.log(message)
-  if (message.type === "match-color") {
-    let selectionChromaColor: chroma.Color = chroma('#000000')
-    let palette
-    let firstSelection
-
-    const threshholdBox = document.getElementById("threshhold") as HTMLInputElement
-    // const replacedColorName = replaceColor(palette, firstSelection, parseInt(threshholdBox.value) || DISTANCE_CAP)
-
-    // figma.closePlugin('Success! ' + replacedColorName)
+  if (message.name === 'closePlugin') {
+    figma.closePlugin(message.data)
   }
-
-  figma.closePlugin()
+  if (message.name === 'replaceColor') {
+    replaceColor(message.data)
+  }
 }
 
 const getColorStyles = (): ColorStyle[] => {
@@ -85,5 +76,10 @@ const getSelections = (): SelectedColor[] => {
       chroma: figmaToChroma(color)
     }
   })
+}
+
+const replaceColor = (info) => {
+  console.log('replaceColor')
+  console.log(info)
 }
 
