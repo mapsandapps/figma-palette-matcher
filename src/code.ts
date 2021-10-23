@@ -1,6 +1,6 @@
 import { filter } from 'lodash'
 import { ColorStyle, RGB, SelectedColor } from './types'
-import { figmaToChroma, figmaToHex } from './utils'
+import { figmaToChroma, figmaToHex, replaceColor } from './utils'
 
 figma.showUI(__html__, {
   width: 450,
@@ -34,7 +34,7 @@ figma.ui.onmessage = (message) => {
     figma.closePlugin(message.data)
   }
   if (message.name === 'replaceColor') {
-    replaceColor(message.data)
+    replaceColor(figma.currentPage.selection, message.data)
   }
 }
 
@@ -76,10 +76,5 @@ const getSelections = (): SelectedColor[] => {
       chroma: figmaToChroma(color)
     }
   })
-}
-
-const replaceColor = (info) => {
-  console.log('replaceColor')
-  console.log(info)
 }
 

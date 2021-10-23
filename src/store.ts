@@ -1,4 +1,5 @@
 import Vuex from 'vuex'
+import { each } from 'lodash'
 import { getClosestColor } from './utils'
 
 const createStore = () => {
@@ -12,8 +13,15 @@ const createStore = () => {
       closePlugin() {
         parent.postMessage({ pluginMessage: { name: 'closePlugin' }}, '*')
       },
-      replaceColors() {
-        parent.postMessage({ pluginMessage: { name: 'replaceColor', data: 'foo' }}, '*')
+      replaceColors({ getters }) {
+        each(getters.colors, color => {
+          if (color.closestColorStyle) {
+            parent.postMessage({ pluginMessage: { name: 'replaceColor', data: color }}, '*')
+          }
+        })
+
+        // TODO: if no colors have matches, post something instead of success message
+        // and/or disable button
 
         parent.postMessage({ pluginMessage: { name: 'closePlugin', data: 'Success!' }}, '*')
       }

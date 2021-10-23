@@ -1,5 +1,5 @@
 import chroma from 'chroma-js'
-import { minBy } from 'lodash'
+import { find, minBy } from 'lodash'
 import { ColorListItem, ColorStyle, LightDarkEnum, SelectedColor } from './types'
 
 export const figmaToChroma = (color: RGB): chroma.Color => {
@@ -40,10 +40,7 @@ export const getLightVsDark = (hex: string): LightDarkEnum => {
   return chroma(hex).get('lab.l') < 70 ? LightDarkEnum.Dark : LightDarkEnum.Light
 }
 
-// export const replaceColor = (palette: PaletteItem[], selection: SceneNode, distanceCap: number) => {
-//   const closestColor = getClosestColor(palette, distanceCap)
-//   // @ts-ignore // TODO:
-//   selection.fillStyleId = closestColor.id
-
-//   return closestColor.name
-// }
+export const replaceColor = (selections, color) => {
+  const matchedSelection = find(selections, ['id', color.originalColor.id])
+  matchedSelection.fillStyleId = color.closestColorStyle.id
+}
