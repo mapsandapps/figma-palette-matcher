@@ -2,23 +2,23 @@
   <div>
     <Inputs />
     <ColorList />
-    <button @click="replaceColors">Replace colors</button>
-    <button @click="closePlugin">Cancel</button>
+    <Form />
   </div>
 </template>
 <script lang="ts">
-import { mapActions, mapMutations } from 'vuex'
+import { mapMutations } from 'vuex'
 
 import ColorList from './components/ColorList.vue'
+import Form from './components/Form.vue'
 import Inputs from './components/Inputs.vue'
 
 export default {
   components: {
     ColorList,
+    Form,
     Inputs
   },
   methods: {
-    ...mapActions(['closePlugin', 'replaceColors']),
     ...mapMutations(['setColorStyles', 'setSelectedColors']),
     handleMessage() {
       onmessage = (event: any) => {
