@@ -5,8 +5,9 @@
       Input a color:&nbsp;
       <input
         type="text"
-        :value="inputtedColor"
-        placeholder="Hex or RGB" />
+        v-model="inputtedColor"
+        placeholder="Hex or RGB"
+        :class="{ error: Boolean(error) }" />
     </div>
     OR
       Select some nodes
@@ -33,6 +34,7 @@ export default {
   },
   data() {
     return {
+      error: null,
       inputtedColor: '#f07300'
     }
   },
@@ -40,6 +42,14 @@ export default {
     ...mapState(['colorStyles', 'selectedColors', 'threshold']),
     inputtedColorSwatches: function() {
       if (!this.inputtedColor || this.colorStyles.length === 0) return
+
+      try {
+        chroma(this.inputtedColor)
+        this.error = null
+      } catch (err) {
+        this.error = err
+        return
+      }
 
       // TODO: handle invalid inputs
       const originalColor = {
@@ -52,7 +62,7 @@ export default {
       return getClosestColor(originalColor, this.colorStyles, this.threshold)
     },
     showInputtedColorSwatches: function() {
-      return (this.inputtedColorSwatches && this.selectedColors.length === 0)
+      return (this.inputtedColorSwatches && this.selectedColors.length === 0 && !this.error)
     }
   },
   methods: {
