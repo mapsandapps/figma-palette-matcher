@@ -20,7 +20,7 @@ export const hexToFigma = (color: string): RGB => {
   }
 }
 
-export const getClosestColor = (color: SelectedColor, colorStyles: ColorStyle[], threshhold: number) : ColorListItem => {
+export const getClosestColor = (color: SelectedColor, colorStyles: ColorStyle[], threshold: number) : ColorListItem => {
   const colorStylesWithDistance = colorStyles.map(colorStyle => {
     return {
       ...colorStyle,
@@ -35,7 +35,7 @@ export const getClosestColor = (color: SelectedColor, colorStyles: ColorStyle[],
   }
 
   // closest color might not be that close; don't match if it's far
-  if (closestColorStyle.distance <= threshhold) {
+  if (closestColorStyle.distance <= threshold) {
     fullColorInfo.closestColorStyle = closestColorStyle
   }
 

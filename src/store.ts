@@ -7,7 +7,7 @@ const createStore = () => {
     state: {
       colorStyles: [],
       selectedColors: [],
-      threshhold: 25
+      threshold: 25
     },
     actions: {
       closePlugin() {
@@ -29,7 +29,7 @@ const createStore = () => {
     getters: {
       colors(state) {
         return state.selectedColors.map(color => {
-          return getClosestColor(color, state.colorStyles, state.threshhold)
+          return getClosestColor(color, state.colorStyles, state.threshold)
         })
       }
     },
@@ -40,8 +40,8 @@ const createStore = () => {
       setSelectedColors(state, colors) {
         state.selectedColors = colors
       },
-      setThreshhold(state, threshhold) {
-        state.threshhold = threshhold
+      setThreshold(state, threshold) {
+        state.threshold = threshold
       }
     }
   })

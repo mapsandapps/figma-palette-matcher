@@ -1,11 +1,11 @@
 <template>
 <div>
   <div>
-    Threshhold:&nbsp;
+    Threshold:&nbsp;
     <input
       type="number"
-      :value="threshhold"
-      @input="updateThreshhold"
+      :value="threshold"
+      @input="updateThreshold"
       placeholder="Default: 25" />
   </div>
   <button @click="replaceColors">Replace colors</button>
@@ -26,12 +26,12 @@ export default {
     return {}
   },
   computed: {
-    ...mapState(['threshhold'])
+    ...mapState(['threshold'])
   },
   methods: {
     ...mapActions(['closePlugin', 'replaceColors']),
-    updateThreshhold(e) {
-      this.$store.commit('setThreshhold', e.target.value || 25)
+    updateThreshold(e) {
+      this.$store.commit('setThreshold', e.target.value || 25)
     }
   },
   mounted() {

@@ -37,7 +37,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['colorStyles', 'selectedColors', 'threshhold']),
+    ...mapState(['colorStyles', 'selectedColors', 'threshold']),
     inputtedColorSwatches: function() {
       if (!this.inputtedColor || this.colorStyles.length === 0) return
 
@@ -49,7 +49,7 @@ export default {
         figma: hexToFigma(this.inputtedColor)
       }
 
-      return getClosestColor(originalColor, this.colorStyles, this.threshhold)
+      return getClosestColor(originalColor, this.colorStyles, this.threshold)
     },
     showInputtedColorSwatches: function() {
       return (this.inputtedColorSwatches && this.selectedColors.length === 0)
