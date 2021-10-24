@@ -10,6 +10,16 @@ export const figmaToHex = (color: RGB): string => {
   return figmaToChroma(color).hex()
 }
 
+export const hexToFigma = (color: string): RGB => {
+  const chromaColor = chroma(color)
+
+  return {
+    r: chromaColor.get('rgb.r') / 255,
+    g: chromaColor.get('rgb.g') / 255,
+    b: chromaColor.get('rgb.b') / 255
+  }
+}
+
 export const getClosestColor = (color: SelectedColor, colorStyles: ColorStyle[], threshhold: number) : ColorListItem => {
   const colorStylesWithDistance = colorStyles.map(colorStyle => {
     return {

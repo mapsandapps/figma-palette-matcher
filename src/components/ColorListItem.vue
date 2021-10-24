@@ -60,7 +60,7 @@ import { LightDarkEnum } from '../types';
 import { getLightVsDark } from "../utils"
 
 export default {
-  name: 'ColorList',
+  name: 'ColorListItem',
   components: {
   },
   computed: {
