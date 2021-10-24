@@ -12,14 +12,6 @@
       Select some nodes
     <hr />
   </div>
-  <div>
-    Threshhold:&nbsp;
-    <input
-      type="number"
-      :value="threshhold"
-      @input="updateThreshhold"
-      placeholder="Default: 25" />
-  </div>
   <ColorListItem
     v-if="showInputtedColorSwatches"
     :color="inputtedColorSwatches" />
@@ -64,9 +56,6 @@ export default {
     }
   },
   methods: {
-    updateThreshhold(e) {
-      this.$store.commit('setThreshhold', e.target.value || 25)
-    }
   },
   mounted() {
   }

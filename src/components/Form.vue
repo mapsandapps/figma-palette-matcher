@@ -1,12 +1,20 @@
 <template>
 <div>
+  <div>
+    Threshhold:&nbsp;
+    <input
+      type="number"
+      :value="threshhold"
+      @input="updateThreshhold"
+      placeholder="Default: 25" />
+  </div>
   <button @click="replaceColors">Replace colors</button>
   <button @click="closePlugin">Cancel</button>
 </div>
 </template>
 
 <script lang="ts">
-import { mapActions, mapMutations } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 
 export default {
   name: 'Form',
@@ -18,9 +26,13 @@ export default {
     return {}
   },
   computed: {
+    ...mapState(['threshhold'])
   },
   methods: {
     ...mapActions(['closePlugin', 'replaceColors']),
+    updateThreshhold(e) {
+      this.$store.commit('setThreshhold', e.target.value || 25)
+    }
   },
   mounted() {
   }
