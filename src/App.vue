@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Inputs />
+    <ColorInput />
     <ColorList />
     <Form />
   </div>
@@ -10,13 +10,13 @@ import { mapMutations } from 'vuex'
 
 import ColorList from './components/ColorList.vue'
 import Form from './components/Form.vue'
-import Inputs from './components/Inputs.vue'
+import ColorInput from './components/ColorInput.vue'
 
 export default {
   components: {
     ColorList,
     Form,
-    Inputs
+    ColorInput
   },
   methods: {
     ...mapMutations(['setColorStyles', 'setSelectedColors']),

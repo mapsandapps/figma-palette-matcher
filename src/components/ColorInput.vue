@@ -25,7 +25,7 @@ import { getClosestColor, hexToFigma } from '../utils';
 import ColorListItem from './ColorListItem.vue';
 
 export default {
-  name: 'Inputs',
+  name: 'ColorInput',
   components: {
     ColorListItem
   },
