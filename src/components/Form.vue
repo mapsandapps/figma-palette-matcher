@@ -10,8 +10,17 @@
       @input="updateThreshold"
       placeholder="Default: 25" />
   </div>
-  <button @click="replaceColors" class="button button--primary">Replace colors</button>
-  <button @click="closePlugin" class="button button--secondary">Cancel</button>
+  <button
+    @click="replaceColors"
+    :disabled="!hasSelectionsToReplace"
+    class="button button--primary">
+    Replace colors
+  </button>
+  <button
+    @click="closePlugin"
+    class="button button--secondary">
+    Cancel
+  </button>
 </div>
 </template>
 
@@ -28,7 +37,11 @@ export default {
     return {}
   },
   computed: {
-    ...mapState(['threshold'])
+    ...mapState(['selectionsToReplace', 'threshold']),
+    hasSelectionsToReplace(): boolean {
+      console.log(this.selectionsToReplace.length > 0)
+      return this.selectionsToReplace.length > 0
+    }
   },
   methods: {
     ...mapActions(['closePlugin', 'replaceColors']),

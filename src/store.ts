@@ -1,5 +1,5 @@
 import Vuex from 'vuex'
-import { difference, each, includes, remove } from 'lodash'
+import { difference, each, filter, find } from 'lodash'
 import { getClosestColor } from './utils'
 
 const createStore = () => {
@@ -14,11 +14,11 @@ const createStore = () => {
       closePlugin() {
         parent.postMessage({ pluginMessage: { name: 'closePlugin' }}, '*')
       },
-      replaceColors({ getters }) {
-        each(getters.colors, color => {
-          if (color.closestColorStyle) {
-            // TODO: only replace if checked
-            parent.postMessage({ pluginMessage: { name: 'replaceColor', data: color }}, '*')
+      replaceColors({ getters, state }) {
+        each(state.selectionsToReplace, selectionId => {
+          const colorToReplace = find(getters.colors, ['originalColor.id', selectionId])
+          if (colorToReplace.closestColorStyle) {
+            parent.postMessage({ pluginMessage: { name: 'replaceColor', data: colorToReplace }}, '*')
           }
         })
 
@@ -40,7 +40,7 @@ const createStore = () => {
         state.selectionsToReplace.push(selectionId)
       },
       removeReplacement(state, selectionId) {
-        remove(state.selectionsToReplace, (id) => id === selectionId)
+        state.selectionsToReplace = filter(state.selectionsToReplace, (id) => id !== selectionId)
       },
       setColorStyles(state, colors) {
         state.colorStyles = colors
