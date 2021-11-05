@@ -1,15 +1,17 @@
 <template>
 <div>
-  <div>
-    Threshold:&nbsp;
+  <!-- TODO: make this an actual label -->
+  <div class="input">
+    <span class="label">Threshold:&nbsp;</span>
     <input
+      class="input__field"
       type="number"
       :value="threshold"
       @input="updateThreshold"
       placeholder="Default: 25" />
   </div>
-  <button @click="replaceColors">Replace colors</button>
-  <button @click="closePlugin">Cancel</button>
+  <button @click="replaceColors" class="button button--primary">Replace colors</button>
+  <button @click="closePlugin" class="button button--secondary">Cancel</button>
 </div>
 </template>
 

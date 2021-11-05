@@ -52,10 +52,19 @@
   <div v-if="!color.closestColorStyle">
     No match
   </div>
+  <div v-if="color.closestColorStyle">
+    <input
+      type="checkbox"
+      :id="selectionId"
+      v-model="isChecked" />
+    <label :for="selectionId">Replace</label>
+  </div>
 </div>
 </template>
 
 <script lang="ts">
+import { includes } from 'lodash'
+import { mapMutations, mapState } from 'vuex'
 import { LightDarkEnum } from '../types';
 import { getLightVsDark } from "../utils"
 
@@ -64,15 +73,31 @@ export default {
   components: {
   },
   computed: {
-    secondSwatchPosition: function() {
+    ...mapState(['selectedColors', 'selectionsToReplace']),
+    isChecked: {
+      get () {
+        return includes(this.selectionsToReplace, this.selectionId)
+      },
+      set (value) {
+        if (value) {
+          this.addReplacement(this.selectionId)
+        } else {
+          this.removeReplacement(this.selectionId)
+        }
+      }
+    },
+    secondSwatchPosition(): number {
       return this.swatchWidth / 2 + 1
     },
-    textColor: function() {
+    selectionId(): string {
+      return this.selectedColors[this.index].id
+    },
+    textColor(): string {
       // if bg is dark, text is white
       // if bg is light, text is black
       return getLightVsDark(this.color.closestColorStyle?.hex || this.color.originalColor.hex) === LightDarkEnum.Light ? 'black' : 'white'
     },
-    width: function() {
+    width(): number {
       return this.swatchWidth * 1.5 + 2
     }
   },
@@ -86,7 +111,16 @@ export default {
     color: {
       type: Object,
       required: true
+    },
+    index: {
+      type: Number,
+      required: false
     }
+  },
+  methods: {
+    ...mapMutations(['addReplacement', 'removeReplacement'])
+  },
+  mounted() {
   }
 };
 </script>

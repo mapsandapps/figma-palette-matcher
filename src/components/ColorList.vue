@@ -4,7 +4,8 @@
   <ColorListItem
     v-for="(color, index) of colors"
     :color="color"
-    :key="'color-swatch' + index" />
+    :index="index"
+    :key="'color-list-item-' + index" />
 </div>
 </template>
 

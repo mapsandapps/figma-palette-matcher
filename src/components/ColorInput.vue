@@ -1,9 +1,10 @@
 <template>
 <div>
   <div v-if="selectedColors.length === 0">
-    <div>
+    <div class="input">
       Input a color:&nbsp;
       <input
+        class="input__field"
         type="text"
         v-model="inputtedColor"
         placeholder="Hex or RGB"
@@ -13,15 +14,18 @@
       Select some nodes
     <hr />
   </div>
-  <ColorListItem
-    v-if="showInputtedColorSwatches"
-    :color="inputtedColorSwatches" />
+  <!-- TODO: split out swatches & use that -->
+  <!-- TODO: shouldn't have index -->
+  <!-- <ColorListItem
+    v-if="shouldShowInputtedColorSwatches"
+    :color="inputtedColorSwatches" /> -->
 </div>
 </template>
 
 <script lang="ts">
 import chroma from 'chroma-js'
 import { mapState } from 'vuex'
+import { ColorListItem as ColorListItemType } from '../types';
 import { getClosestColor, hexToFigma } from '../utils';
 import ColorListItem from './ColorListItem.vue';
 
@@ -40,7 +44,7 @@ export default {
   },
   computed: {
     ...mapState(['colorStyles', 'selectedColors', 'threshold']),
-    inputtedColorSwatches: function() {
+    inputtedColorSwatches(): ColorListItemType {
       if (!this.inputtedColor || this.colorStyles.length === 0) return
 
       try {
@@ -61,7 +65,7 @@ export default {
 
       return getClosestColor(originalColor, this.colorStyles, this.threshold)
     },
-    showInputtedColorSwatches: function() {
+    shouldShowInputtedColorSwatches(): boolean {
       return (this.inputtedColorSwatches && this.selectedColors.length === 0 && !this.error)
     }
   },

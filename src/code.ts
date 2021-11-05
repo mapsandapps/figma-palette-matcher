@@ -4,7 +4,8 @@ import { figmaToChroma, figmaToHex, replaceColor } from './utils'
 
 figma.showUI(__html__, {
   width: 450,
-  height: Math.round(figma.viewport.bounds.height * 0.8)
+  height: 450
+  // height: Math.round(figma.viewport.bounds.height * 0.8) // FIXME: this was sometimes getting a value 2x the actual?
 })
 
 figma.on('run', () => {

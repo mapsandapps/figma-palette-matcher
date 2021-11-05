@@ -1,5 +1,5 @@
 import Vuex from 'vuex'
-import { each } from 'lodash'
+import { difference, each, includes, remove } from 'lodash'
 import { getClosestColor } from './utils'
 
 const createStore = () => {
@@ -7,6 +7,7 @@ const createStore = () => {
     state: {
       colorStyles: [],
       selectedColors: [],
+      selectionsToReplace: [],
       threshold: 25
     },
     actions: {
@@ -16,6 +17,7 @@ const createStore = () => {
       replaceColors({ getters }) {
         each(getters.colors, color => {
           if (color.closestColorStyle) {
+            // TODO: only replace if checked
             parent.postMessage({ pluginMessage: { name: 'replaceColor', data: color }}, '*')
           }
         })
@@ -34,10 +36,26 @@ const createStore = () => {
       }
     },
     mutations: {
+      addReplacement(state, selectionId) {
+        state.selectionsToReplace.push(selectionId)
+      },
+      removeReplacement(state, selectionId) {
+        remove(state.selectionsToReplace, (id) => id === selectionId)
+      },
       setColorStyles(state, colors) {
         state.colorStyles = colors
       },
       setSelectedColors(state, colors) {
+        const newColors = difference(colors, state.selectedColors)
+        const removedColors = difference(state.selectedColors, colors)
+        // add any NEW selections to selectionsToReplace
+        each(newColors, color => {
+          this.commit("addReplacement", color.id)
+        })
+        // remove anything that's no longer selected from selectionsToReplace
+        each(removedColors, color => {
+          this.commit("removeReplacement", color.id)
+        })
         state.selectedColors = colors
       },
       setThreshold(state, threshold) {
