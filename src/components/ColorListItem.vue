@@ -46,13 +46,13 @@
     {{ color.closestColorStyle.name }}
   </div>
 
-  <div v-if="color.distance === 0">
+  <div v-if="color.distance === 0" class="exact-match">
     Exact match!
   </div>
   <div v-if="!color.closestColorStyle">
     No match
   </div>
-  <div v-if="color.closestColorStyle">
+  <div v-if="color.closestColorStyle" class="replace-input">
     <input
       type="checkbox"
       :id="selectionId"
@@ -142,5 +142,10 @@ export default {
   top: 52px;
   left: 40px;
   text-align: center;
+}
+
+.exact-match,
+.replace-input {
+  margin-top: 16px;
 }
 </style>
