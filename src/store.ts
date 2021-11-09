@@ -1,13 +1,14 @@
 import Vuex from 'vuex'
-import { difference, each, filter, find } from 'lodash'
+import { difference, each, filter, find, map } from 'lodash'
 import { getClosestColor } from './utils'
+import { ColorStyle } from './types'
 
 const createStore = () => {
   return new Vuex.Store({
     state: {
       colorStyles: [],
       selectedColors: [],
-      selectionsToReplace: [],
+      selectionsToReplace: [], // TODO: perhaps rename plannedReplacements
       threshold: 25
     },
     actions: {
@@ -46,20 +47,37 @@ const createStore = () => {
         state.colorStyles = colors
       },
       setSelectedColors(state, colors) {
-        const newColors = difference(colors, state.selectedColors)
-        const removedColors = difference(state.selectedColors, colors)
-        // add any NEW selections to selectionsToReplace
-        each(newColors, color => {
-          this.commit("addReplacement", color.id)
+        // remove any planned replacements that were removed from selection and add any new selections to planned replacements
+        this.commit("updatePlannedReplacements", {
+          oldSelections: state.selectedColors,
+          newSelections: colors
         })
-        // remove anything that's no longer selected from selectionsToReplace
-        each(removedColors, color => {
-          this.commit("removeReplacement", color.id)
-        })
+
         state.selectedColors = colors
       },
       setThreshold(state, threshold) {
         state.threshold = threshold
+      },
+      updatePlannedReplacements(state, { oldSelections, newSelections }) {
+        // gets called when selections change
+
+        const oldIDs = map(oldSelections, 'id')
+        const newIDs = map(newSelections, 'id')
+
+        const addedColors: ColorStyle[] = difference(newIDs, oldIDs)
+        const removedColors: ColorStyle[] = difference(oldIDs, newIDs)
+
+        // add any NEW selections to selectionsToReplace
+        each(addedColors, id => {
+          this.commit("addReplacement", id)
+        })
+
+        // remove anything that's no longer selected from selectionsToReplace
+        each(removedColors, id => {
+          this.commit("removeReplacement", id)
+        })
+        // TODO: i don't think a selection should be in selectionsToReplace if there's no match
+        // TODO: make sure it gets removed if threshold changes, not just when de/selecting
       }
     }
   })
