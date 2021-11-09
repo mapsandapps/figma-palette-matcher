@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="palette-matcher">
     <ColorInput />
     <ColorList />
     <Form />

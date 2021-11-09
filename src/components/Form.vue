@@ -16,11 +16,6 @@
     class="button button--primary">
     Replace colors
   </button>
-  <button
-    @click="closePlugin"
-    class="button button--secondary">
-    Cancel
-  </button>
 </div>
 </template>
 
@@ -44,7 +39,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['closePlugin', 'replaceColors']),
+    ...mapActions(['replaceColors']),
     updateThreshold(e) {
       this.$store.commit('setThreshold', e.target.value || 25)
     }

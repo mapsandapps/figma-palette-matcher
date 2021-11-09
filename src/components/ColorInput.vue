@@ -1,6 +1,7 @@
 <template>
 <div>
   <div v-if="selectedColors.length === 0">
+    <EmptyState />
     <div class="input">
       Input a color:&nbsp;
       <input
@@ -10,8 +11,6 @@
         placeholder="Hex or RGB"
         :class="{ error: Boolean(error) }" />
     </div>
-    OR
-      Select some nodes
     <hr />
   </div>
   <!-- TODO: split out swatches & use that -->
@@ -28,11 +27,13 @@ import { mapState } from 'vuex'
 import { ColorListItem as ColorListItemType } from '../types';
 import { getClosestColor, hexToFigma } from '../utils';
 import ColorListItem from './ColorListItem.vue';
+import EmptyState from './EmptyState.vue';
 
 export default {
   name: 'ColorInput',
   components: {
-    ColorListItem
+    ColorListItem,
+    EmptyState
   },
   props: {
   },

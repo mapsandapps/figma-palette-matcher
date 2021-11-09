@@ -12,9 +12,6 @@ const createStore = () => {
       threshold: 25
     },
     actions: {
-      closePlugin() {
-        parent.postMessage({ pluginMessage: { name: 'closePlugin' }}, '*')
-      },
       replaceColors({ getters, state }) {
         each(state.selectionsToReplace, selectionId => {
           const colorToReplace = find(getters.colors, ['originalColor.id', selectionId])
@@ -78,6 +75,7 @@ const createStore = () => {
         })
         // TODO: i don't think a selection should be in selectionsToReplace if there's no match
         // TODO: make sure it gets removed if threshold changes, not just when de/selecting
+        // TODO: ORRRR... instead keep them in there and have a getter for willReplacementsHappen and have it only return true if they will, and disable the "replace colors" button based on that
       }
     }
   })

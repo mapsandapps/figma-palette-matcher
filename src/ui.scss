@@ -1,17 +1,34 @@
 @import "~normalize.css/normalize.css";
 
 body {
-  margin: 20px;
+  margin: 24px;
 }
-input {
-  // border: 1px solid black;
-  // outline: none;
-  // padding: 8px;
-  &.error {
-    border-color: var(--red);
-    outline-color: var(--red);
+
+#palette-matcher {
+  input {
+    &.error {
+      border-color: var(--red);
+      outline-color: var(--red);
+    }
+  }
+
+  .input__field:hover,
+  .input__field:placeholder-shown:hover {
+    border: 1px solid var(--black3);
+  }
+
+  .input__field,
+  .input__field:placeholder-shown {
+    border: 1px solid var(--black1);
+  }
+
+  .input__field,
+  .label {
+    display: inline-block;
+    width: auto;
   }
 }
+
 // input:hover { box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1); }
 // button:focus { box-shadow: inset 0 0 0 2px #18A0FB; }
 // #create:focus { box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.3); }
