@@ -1,5 +1,6 @@
 import Vuex from 'vuex'
-import { difference, each, filter, find, map } from 'lodash'
+import { difference, each, filter, find, includes, map } from 'lodash'
+import { DEFAULT_THRESHOLD } from './constants'
 import { getClosestColor } from './utils'
 import { ColorStyle } from './types'
 
@@ -9,7 +10,7 @@ const createStore = () => {
       colorStyles: [],
       selectedColors: [],
       selectionsToReplace: [], // TODO: perhaps rename plannedReplacements
-      threshold: 25
+      threshold: DEFAULT_THRESHOLD
     },
     actions: {
       replaceColors({ getters, state }) {
@@ -31,6 +32,13 @@ const createStore = () => {
         return state.selectedColors.map(color => {
           return getClosestColor(color, state.colorStyles, state.threshold)
         })
+      },
+      willColorsBeReplaced(state, getters) {
+        // if none of the selections meet the threshold OR none of the selections are slated for replacement, return false
+        // put another way, if ANY of the selections meets the threshold AND is slated for replacement, return true
+        return Boolean(find(getters.colors, color => {
+          return (color.distance <= state.threshold) && includes(state.selectionsToReplace, color.originalColor.id)
+        }))
       }
     },
     mutations: {

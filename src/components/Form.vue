@@ -12,7 +12,7 @@
   </div>
   <button
     @click="replaceColors"
-    :disabled="!hasSelectionsToReplace"
+    :disabled="!willColorsBeReplaced"
     class="button button--primary">
     Replace colors
   </button>
@@ -20,7 +20,8 @@
 </template>
 
 <script lang="ts">
-import { mapActions, mapState } from 'vuex'
+import { mapActions, mapGetters, mapMutations, mapState } from 'vuex'
+import { DEFAULT_THRESHOLD } from '../constants'
 
 export default {
   name: 'Form',
@@ -32,21 +33,19 @@ export default {
     return {}
   },
   computed: {
-    ...mapState(['selectionsToReplace', 'threshold']),
-    hasSelectionsToReplace(): boolean {
-      console.log(this.selectionsToReplace.length > 0)
-      return this.selectionsToReplace.length > 0
-    }
+    ...mapGetters(['willColorsBeReplaced']),
+    ...mapState(['threshold'])
   },
   methods: {
     ...mapActions(['replaceColors']),
+    ...mapMutations(['setThreshold']),
     updateThreshold(e) {
-      this.$store.commit('setThreshold', e.target.value || 25)
+      this.setThreshold(e.target.value || DEFAULT_THRESHOLD)
     }
   },
   mounted() {
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>
