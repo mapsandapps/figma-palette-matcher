@@ -5,6 +5,11 @@
     <div class="input">
       Input a color:&nbsp;
       <input
+        class="input__field picker"
+        type="color"
+        v-model="inputtedColor" />
+      or
+      <input
         class="input__field"
         type="text"
         v-model="inputtedColor"
@@ -78,4 +83,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+#palette-matcher .input {
+  .input__field.picker {
+    width: 44px;
+    height: 23px;
+    padding: 1px 2px;
+  }
+}
 </style>
