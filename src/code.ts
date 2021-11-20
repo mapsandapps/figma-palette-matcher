@@ -60,7 +60,6 @@ const getColorStyles = (): ColorStyle[] => {
 
 const getSelections = (): SelectedColor[] => {
   const selectionsWithFill = filter(figma.currentPage.selection, (selection, i) => {
-    // TODO: this possibly should use more than just the first fill
     // TODO: possibly remove ones that already have a color style
     // @ts-ignore
     if (!selection.fills || selection.fills.length < 1) return
@@ -77,7 +76,9 @@ const getSelections = (): SelectedColor[] => {
       id: selection.id,
       figma: color,
       hex: figmaToHex(color),
-      chroma: figmaToChroma(color)
+      chroma: figmaToChroma(color),
+      // @ts-ignore
+      opacity: selection.fills[0].opacity
     }
   })
 }
