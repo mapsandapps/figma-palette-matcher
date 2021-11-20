@@ -13,6 +13,9 @@ const createStore = () => {
       threshold: DEFAULT_THRESHOLD
     },
     actions: {
+      closePlugin() {
+        parent.postMessage({ pluginMessage: { name: 'closePlugin' }}, '*')
+      },
       replaceColors({ getters, state }) {
         each(state.selectionsToReplace, selectionId => {
           const colorToReplace = find(getters.colors, ['originalColor.id', selectionId])

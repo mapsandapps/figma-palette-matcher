@@ -5,6 +5,10 @@ body {
 }
 
 #palette-matcher {
+  button {
+    cursor: pointer;
+  }
+
   input {
     &.error {
       border-color: var(--red);

@@ -1,22 +1,30 @@
 <template>
   <div id="palette-matcher">
-    <ColorInput />
-    <ColorList />
-    <Form />
+    <NoColorStylesWarning v-if="colorStyles.length === 0" />
+    <div v-else>
+      <ColorInput />
+      <ColorList />
+      <Form />
+    </div>
   </div>
 </template>
 <script lang="ts">
-import { mapMutations } from 'vuex'
+import { mapMutations, mapState } from 'vuex'
 
+import ColorInput from './components/ColorInput.vue'
 import ColorList from './components/ColorList.vue'
 import Form from './components/Form.vue'
-import ColorInput from './components/ColorInput.vue'
+import NoColorStylesWarning from './components/NoColorStylesWarning.vue'
 
 export default {
   components: {
+    ColorInput,
     ColorList,
     Form,
-    ColorInput
+    NoColorStylesWarning
+  },
+  computed: {
+    ...mapState(['colorStyles']),
   },
   methods: {
     ...mapMutations(['setColorStyles', 'setSelectedColors']),
