@@ -63,6 +63,9 @@ const getSelections = (): SelectedColor[] => {
     // TODO: this possibly should use more than just the first fill
     // TODO: possibly remove ones that already have a color style
     // @ts-ignore
+    if (!selection.fills || selection.fills.length < 1) return
+
+    // @ts-ignore
     const color = selection.fills[0].color
     return Boolean(color)
   })
