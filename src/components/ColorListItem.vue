@@ -3,8 +3,8 @@
   <td>
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
       <pattern id="checkerboard-pattern" x="0" y="0" width="6" height="6" patternUnits="userSpaceOnUse">
-        <rect width="3" height="3" x="3" y="0" fill="#e1e1e1" />
-        <rect width="3" height="3" x="0" y="3" fill="#e1e1e1" />
+        <rect width="3" height="3" x="3" y="0" fill="#fff" />
+        <rect width="3" height="3" x="0" y="3" fill="#fff" />
       </pattern>
       <path d="M0 1C0 0.447715 0.447715 0 1 0H8V16H1C0.447715 16 0 15.5523 0 15V1Z" :fill="color.originalColor.hex" />
       <path d="M8 0H15C15.5523 0 16 0.447715 16 1V15C16 15.5523 15.5523 16 15 16H8V0Z" fill="url(#checkerboard-pattern)" />
@@ -16,7 +16,9 @@
   </td>
   <td v-if="color.closestColorStyle">
     <svg width="16" height="16" viewBox="0 0 16 16">
-      <circle r="8" cx="8" cy="8" :fill="color.closestColorStyle.hex" />
+      <path d="M2.34314575,2.34 C-0.781048583,5.46419433 -0.781048583,10.5295142 2.34314575,13.6537085 C5.46734008,16.7779028 10.5326599,16.7779028 13.6568542,13.6537085 L2.34314575,2.34 Z" :fill="color.closestColorStyle.hex"></path>
+      <path d="M13.6568542,13.6568542 C16.7810486,10.5326599 16.7810486,5.46734008 13.6568542,2.34314575 C10.5326599,-0.781048583 5.46734008,-0.781048583 2.34314575,2.34314575 L13.6568542,13.6568542 L13.6568542,13.6568542 Z" fill="url(#checkerboard-pattern)" />
+      <path d="M13.6568542,13.6568542 C16.7810486,10.5326599 16.7810486,5.46734008 13.6568542,2.34314575 C10.5326599,-0.781048583 5.46734008,-0.781048583 2.34314575,2.34314575 L13.6568542,13.6568542 L13.6568542,13.6568542 Z" :fill="color.closestColorStyle.hex" :fill-opacity="color.closestColorStyle.opacity" />
     </svg>
     {{ color.closestColorStyle.name }}
   </td>

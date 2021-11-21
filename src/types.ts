@@ -11,7 +11,8 @@ export type ColorStyle = {
   name: string,
   hex: string,
   chroma: chroma.Color,
-  figma: RGB
+  figma: RGB,
+  opacity: number
 }
 
 export type SelectedColor = {

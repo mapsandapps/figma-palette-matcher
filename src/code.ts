@@ -40,8 +40,10 @@ figma.ui.onmessage = (message) => {
 }
 
 const getColorStyles = (): ColorStyle[] => {
+  // FIXME: can there be more than one style.paints? presumably so.
+  // TODO: what to do if style.paints[n].type !== 'SOLID'?
   const colorStyles = filter(figma.getLocalPaintStyles(), (style) => {
-    return style.paints[0].type === 'SOLID' && style.paints[0].opacity === 1
+    return style.paints[0].type === 'SOLID'
   })
 
   return colorStyles.map(style => {
@@ -52,7 +54,8 @@ const getColorStyles = (): ColorStyle[] => {
       name: style.name,
       hex: figmaToChroma(styleColor).hex(),
       chroma: figmaToChroma(styleColor),
-      figma: styleColor
+      figma: styleColor,
+      opacity: style.paints[0].opacity
     }
     return colorStyle
   })
