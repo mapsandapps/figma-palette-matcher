@@ -22,14 +22,19 @@
     </svg>
     {{ color.closestColorStyle.name }}
   </td>
-  <td v-else>
+  <td v-else class="no-match">
     No match
   </td>
   <td>
     <span v-if="color.distance === 0" class="exact-match">
       Exact match!
     </span>
-    <span v-else>
+    <span
+      v-else
+      :class="{
+        'no-match': !color.closestColorStyle,
+        'not-exact-match': true
+      }">
       Distance: {{ Math.ceil(color.distance) }}
     </span>
   </td>
@@ -105,5 +110,13 @@ td {
 
 svg {
   vertical-align: middle;
+}
+
+.no-match {
+  color: var(--red)!important;
+}
+
+.not-exact-match {
+  color: #7f8c8d;
 }
 </style>
