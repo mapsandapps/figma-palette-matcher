@@ -55,6 +55,7 @@ export const getColorInfo = (color: string, id: string): SelectedColor => {
 }
 
 export const getDistance = (firstHex: string, secondHex: string): number => {
+  // NOTE: if this changes away from 'Lab' (the default), the max distance will change
   return chroma.distance(firstHex, secondHex)
 }
 

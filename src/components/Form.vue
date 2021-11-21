@@ -1,9 +1,18 @@
 <template>
 <div>
-  <div class="input">
+  <div>
     <label class="label" for="threshold-input">Threshold:&nbsp;</label>
     <input
+      type="range"
       id="threshold-input"
+      name="slider"
+      min="0"
+      max="100"
+      step="1"
+      :value="threshold"
+      @input="updateThreshold">
+    <input
+      id="threshold-input-number"
       class="input__field"
       type="number"
       :value="threshold"
@@ -49,4 +58,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+label {
+  color: var(--black);
+}
+
+#palette-matcher #threshold-input-number.input__field {
+  width: 48px;
+}
 </style>
