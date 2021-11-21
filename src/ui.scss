@@ -4,49 +4,72 @@ body {
   margin: 24px;
 }
 
-#palette-matcher {
-  button {
-    cursor: pointer;
+button {
+  cursor: pointer;
+}
+
+input {
+  &.error {
+    border-color: var(--red);
+    outline-color: var(--red);
+  }
+}
+
+.input__field:hover,
+.input__field:placeholder-shown:hover {
+  border: 1px solid var(--black3);
+}
+
+.input__field,
+.input__field:placeholder-shown {
+  border: 1px solid var(--black1);
+}
+
+.input__field,
+.label {
+  display: inline-block;
+  width: auto;
+}
+
+table {
+  border-collapse: collapse;
+  font-size: 11px;
+  margin-bottom: 48px;
+}
+
+tbody {
+  border: 2px solid var(--grey);
+
+  tr:nth-child(odd) {
+    background-color: var(--grey);
   }
 
-  input {
-    &.error {
-      border-color: var(--red);
-      outline-color: var(--red);
+  tr:nth-child(even) {
+    td {
+      border-left-color: var(--grey);
+      border-right-color: var(--grey);
     }
   }
+}
 
-  .input__field:hover,
-  .input__field:placeholder-shown:hover {
-    border: 1px solid var(--black3);
+th {
+  color: #7f8c8d;
+  font-weight: normal;
+  padding: 8px;
+  text-align: start;
+  text-transform: uppercase;
+}
+
+td {
+  border-left: 2px solid var(--white);
+  border-right: 2px solid var(--white);
+
+  &:first-of-type {
+    border-left-color: var(--grey);
   }
 
-  .input__field,
-  .input__field:placeholder-shown {
-    border: 1px solid var(--black1);
-  }
-
-  .input__field,
-  .label {
-    display: inline-block;
-    width: auto;
-  }
-
-  table {
-    font-size: 11px;
-    padding-bottom: 48px;
-  }
-
-  th {
-    color: #7f8c8d;
-    font-weight: normal;
-    padding: 8px;
-    text-align: start;
-    text-transform: uppercase;
-  }
-
-  tbody tr:nth-child(odd) {
-    background-color: var(--grey);
+  &:last-of-type {
+    border-right-color: var(--grey);
   }
 }
 

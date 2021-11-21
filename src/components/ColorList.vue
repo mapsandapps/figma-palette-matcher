@@ -2,7 +2,7 @@
 <table v-if="colors.length > 0">
   <thead>
     <tr>
-      <th>Original Color</th>
+      <th colspan="2">Original Color</th>
       <th>Target Color</th>
       <th>Distance</th>
       <th>Replace?</th>

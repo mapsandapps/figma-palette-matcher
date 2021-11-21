@@ -12,6 +12,8 @@
       <!-- TODO: if it had a color style already, it should either show that here or just not be included in the table -->
     </svg>
     {{ color.originalColor.hex }}
+  </td>
+  <td>
     {{ Math.round(color.originalColor.opacity * 100) }}%
   </td>
   <td v-if="color.closestColorStyle">
@@ -106,6 +108,12 @@ export default {
 td {
   line-height: 16px;
   padding: 8px;
+  &:nth-of-type(1) {
+    border-right-width: 0px;
+  }
+  &:nth-of-type(2) {
+    border-left-width: 0px;
+  }
 }
 
 svg {
