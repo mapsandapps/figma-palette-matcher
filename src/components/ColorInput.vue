@@ -1,36 +1,45 @@
 <template>
 <div>
-  <div v-if="selectedColors.length === 0">
-    <EmptyState />
-    <div class="input">
-      Input a color:&nbsp;
-      <input
-        class="input__field picker"
-        type="color"
-        v-model="inputtedColor" />
-      or
-      <input
-        class="input__field"
-        type="text"
-        v-model="inputtedColor"
-        placeholder="Hex or RGB"
-        :class="{ error: Boolean(error) }" />
-    </div>
-    <hr />
+  <EmptyState />
+  <div class="input">
+    Input a color:&nbsp;
+    <input
+      class="input__field picker"
+      type="color"
+      v-model="colorForHexInput" />
+    or
+    <input
+      class="input__field"
+      type="text"
+      v-model="inputtedColor"
+      placeholder="Hex or RGB"
+      :class="{ error: Boolean(error) }" />
   </div>
-  <!-- TODO: split out swatches & use that -->
-  <!-- TODO: shouldn't have index -->
-  <!-- <ColorListItem
-    v-if="shouldShowInputtedColorSwatches"
-    :color="inputtedColorSwatches" /> -->
+  <div v-if="error" class="error">{{ error }}</div>
+  <table v-if="colorInfo">
+    <thead>
+      <tr>
+        <th>Original Color</th>
+        <th>Target Color</th>
+        <th>Distance</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ColorListItem
+        :color="colorInfo"
+        :index="0"
+        key="color-list-item-0"
+        :isReplaceable="false" />
+    </tbody>
+  </table>
 </div>
 </template>
 
 <script lang="ts">
 import chroma from 'chroma-js'
 import { mapState } from 'vuex'
-import { ColorListItem as ColorListItemType } from '../types';
-import { getClosestColor, hexToFigma } from '../utils';
+import { ColorListItem as ColorListItemType, SelectedColor } from '../types';
+import { getClosestColor, getColorInfo, hexToFigma } from '../utils';
 import ColorListItem from './ColorListItem.vue';
 import EmptyState from './EmptyState.vue';
 
@@ -50,7 +59,10 @@ export default {
   },
   computed: {
     ...mapState(['colorStyles', 'selectedColors', 'threshold']),
-    inputtedColorSwatches(): ColorListItemType {
+    colorForHexInput(): string {
+      return this.colorInfo?.originalColor.hex || this.inputtedColor
+    },
+    colorInfo(): ColorListItemType {
       if (!this.inputtedColor || this.colorStyles.length === 0) return
 
       try {
@@ -58,18 +70,16 @@ export default {
         this.error = null
       } catch (err) {
         this.error = err
+        console.log(err)
         return
       }
 
-      // TODO: handle invalid inputs
-      const originalColor = {
-        id: '',
-        hex: chroma(this.inputtedColor).hex(),
-        chroma: chroma(this.inputtedColor),
-        figma: hexToFigma(this.inputtedColor)
-      }
+      // TODO: test inputting 0xff3399 and other things that should work via chroma
 
-      return getClosestColor(originalColor, this.colorStyles, this.threshold)
+      // TODO: set this using a method; this code is probably mostly repeated elsewhere
+      const originalColor: SelectedColor = getColorInfo(this.inputtedColor, '')
+
+      return getClosestColor(originalColor, this.colorStyles, null)
     },
     shouldShowInputtedColorSwatches(): boolean {
       return (this.inputtedColorSwatches && this.selectedColors.length === 0 && !this.error)
@@ -89,5 +99,10 @@ export default {
     height: 23px;
     padding: 1px 2px;
   }
+}
+
+.error {
+  color: var(--red);
+  font-size: 11px;
 }
 </style>

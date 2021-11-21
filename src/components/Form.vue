@@ -1,9 +1,9 @@
 <template>
 <div>
-  <!-- TODO: make this an actual label -->
   <div class="input">
-    <span class="label">Threshold:&nbsp;</span>
+    <label class="label" for="threshold-input">Threshold:&nbsp;</label>
     <input
+      id="threshold-input"
       class="input__field"
       type="number"
       :value="threshold"

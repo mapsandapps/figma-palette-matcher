@@ -31,6 +31,23 @@ body {
     display: inline-block;
     width: auto;
   }
+
+  table {
+    font-size: 11px;
+    padding-bottom: 48px;
+  }
+
+  th {
+    color: #7f8c8d;
+    font-weight: normal;
+    padding: 8px;
+    text-align: start;
+    text-transform: uppercase;
+  }
+
+  tbody tr:nth-child(odd) {
+    background-color: var(--grey);
+  }
 }
 
 // input:hover { box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1); }

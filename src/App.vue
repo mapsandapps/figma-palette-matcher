@@ -2,9 +2,9 @@
   <div id="palette-matcher">
     <NoColorStylesWarning v-if="colorStyles.length === 0" />
     <div v-else>
-      <ColorInput />
+      <ColorInput v-if="selectedColors.length === 0" />
       <ColorList />
-      <Form />
+      <Form v-if="selectedColors.length > 0" />
     </div>
   </div>
 </template>
@@ -24,7 +24,7 @@ export default {
     NoColorStylesWarning
   },
   computed: {
-    ...mapState(['colorStyles']),
+    ...mapState(['colorStyles', 'selectedColors']),
   },
   methods: {
     ...mapMutations(['setColorStyles', 'setSelectedColors']),

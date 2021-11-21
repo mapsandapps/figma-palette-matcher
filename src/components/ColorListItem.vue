@@ -33,7 +33,7 @@
       Distance: {{ Math.ceil(color.distance) }}
     </span>
   </td>
-  <td>
+  <td v-if="isReplaceable">
     <span v-if="color.closestColorStyle" class="replace-input">
       <input
         type="checkbox"
@@ -82,6 +82,11 @@ export default {
     index: {
       type: Number,
       required: false
+    },
+    isReplaceable: {
+      type: Boolean,
+      required: false,
+      default: true
     }
   },
   methods: {

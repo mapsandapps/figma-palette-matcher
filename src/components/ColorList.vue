@@ -1,5 +1,5 @@
 <template>
-<table>
+<table v-if="colors.length > 0">
   <thead>
     <tr>
       <th>Original Color</th>
@@ -40,19 +40,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-table {
-  font-size: 11px;
-}
-
-th {
-  color: #7f8c8d;
-  font-weight: normal;
-  padding: 8px;
-  text-align: start;
-  text-transform: uppercase;
-}
-
-tbody tr:nth-child(odd) {
-  background-color: #ecf0f1;
-}
 </style>
