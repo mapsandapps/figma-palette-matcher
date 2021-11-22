@@ -19,7 +19,7 @@
   <table v-if="colorInfo">
     <thead>
       <tr>
-        <th>Original Color</th>
+        <th colspan="2">Original Color</th>
         <th>Target Color</th>
         <th>Distance</th>
       </tr>

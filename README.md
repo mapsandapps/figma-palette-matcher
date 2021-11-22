@@ -19,3 +19,9 @@ For dev:
     $ npm run dev
 
 Use the Figma desktop app and [import the plugin via the plugins menu](https://www.figma.com/plugin-docs/setup/).
+
+
+## Credits
+
+* [chroma-js](https://vis4.net/chromajs/): color calculations
+* [undraw.co](https://undraw.co/): illustrations
